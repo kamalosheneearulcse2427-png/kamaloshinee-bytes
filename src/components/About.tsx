@@ -1,6 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { GraduationCap, Heart, Users, MapPin } from "lucide-react";
-import profilePhoto from "@/assets/profile-photo.jpg";
 
 const About = () => {
   return (
@@ -56,7 +55,7 @@ const About = () => {
               <div className="text-center">
                 <div className="w-64 h-64 mx-auto mb-6 rounded-full overflow-hidden border-4 border-accent/20 shadow-2xl">
                   <img 
-                    src={profilePhoto} 
+                    src="https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=500&q=80" 
                     alt="KAMALOSHENEE A"
                     className="w-full h-full object-cover"
                   />
