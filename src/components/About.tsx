@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { GraduationCap, Heart, Users, MapPin } from "lucide-react";
-import profilePhoto from "@/assets/profile-photo.jpg";
+import profilePhoto from "@/assets/profile-kamaloshenee.jpg";
 
 const About = () => {
   return (
