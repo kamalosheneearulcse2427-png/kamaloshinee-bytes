@@ -42,7 +42,7 @@ const Navigation = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="text-lg font-medium text-white">
-            Alex Smith.
+            kamaloshenee.
           </div>
 
           {/* Desktop Navigation */}
