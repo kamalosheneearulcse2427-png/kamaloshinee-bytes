@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Sun, Moon, ShoppingCart } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Menu, X } from "lucide-react";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,27 +56,8 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* Cart and Theme Toggle */}
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-white/90 hover:text-white hover:bg-white/10 text-sm"
-            >
-              <ShoppingCart className="h-4 w-4 mr-2" />
-              CART(0)
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="text-white/90 hover:text-white hover:bg-white/10"
-            >
-              {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </Button>
-
-            {/* Mobile Menu Button */}
+          {/* Mobile Menu Button */}
+          <div className="flex items-center">
             <Button
               variant="ghost"
               size="icon"
