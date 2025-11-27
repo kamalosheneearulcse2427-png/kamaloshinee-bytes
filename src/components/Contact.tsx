@@ -1,239 +1,204 @@
-import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent } from "@/components/ui/card";
-import { Mail, Phone, Linkedin, Github, MapPin, Send, MessageCircle } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Mail, Github, Linkedin, Send } from "lucide-react";
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef, useState } from "react";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-  const { toast } = useToast();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for your message. I'll get back to you soon.",
-    });
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    console.log('Form submitted:', formData);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
-
-  const contactInfo = [
+  const socialLinks = [
     {
-      icon: Mail,
+      icon: <Mail className="h-5 w-5" />,
       label: "Email",
       value: "kamaloshenee.arul@gmail.com",
       href: "mailto:kamaloshenee.arul@gmail.com",
-      color: "bg-teal"
+      color: "teal"
     },
     {
-      icon: Phone,
-      label: "Phone",
-      value: "+91 8056577491",
-      href: "tel:+918056577491",
-      color: "bg-purple"
-    },
-    {
-      icon: Linkedin,
-      label: "LinkedIn",
-      value: "Connect with me",
-      href: "https://www.linkedin.com/in/a-kamaloshenee-arul-arul-5a916327",
-      color: "bg-blue-600"
-    },
-    {
-      icon: Github,
+      icon: <Github className="h-5 w-5" />,
       label: "GitHub",
-      value: "View my code",
+      value: "@kamaloshenee_app",
       href: "https://github.com/kamaloshenee_app",
-      color: "bg-gray-800"
-    }
+      color: "purple"
+    },
+    {
+      icon: <Linkedin className="h-5 w-5" />,
+      label: "LinkedIn",
+      value: "kamaloshenee Arul",
+      href: "https://www.linkedin.com/in/a-kamaloshenee-arul-arul-5a916327",
+      color: "pink"
+    },
   ];
 
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0.8, rotateX: -20 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      rotateX: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
-    <section id="contact" className="py-20 bg-background">
+    <section id="contact" className="py-20 bg-secondary/30" ref={ref}>
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
+        <motion.div 
+          initial={{ opacity: 0, y: -30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-            Let's Connect
+            Get In Touch
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Ready to collaborate or have a question? I'd love to hear from you. 
-            Let's create something amazing together.
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Have a project in mind or want to collaborate? Let's connect!
           </p>
-        </div>
+        </motion.div>
 
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <div>
-            <Card className="bg-card border-0 shadow-xl">
-              <CardContent className="p-8">
-                <div className="flex items-center mb-6">
-                  <div className="bg-gradient-accent p-3 rounded-lg mr-4">
-                    <MessageCircle className="h-6 w-6 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-card-foreground">
-                    Send a Message
-                  </h3>
-                </div>
-
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-card-foreground mb-2">
-                        Name
-                      </label>
+        <div className="max-w-5xl mx-auto" style={{ perspective: '2000px' }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <motion.div
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              variants={cardVariants}
+              whileHover={{ 
+                scale: 1.02,
+                rotateY: 5,
+                transition: { duration: 0.3 }
+              }}
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              <Card className="bg-gradient-card border-accent/20 h-full shadow-xl hover:shadow-2xl transform-gpu transition-all duration-300">
+                <CardContent className="p-8">
+                  <h3 className="text-2xl font-bold mb-6 text-foreground">Send a Message</h3>
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <motion.div
+                      whileFocus={{ scale: 1.02 }}
+                      className="transform-gpu"
+                    >
                       <Input
-                        type="text"
-                        name="name"
+                        placeholder="Your Name"
                         value={formData.name}
-                        onChange={handleChange}
-                        placeholder="Your full name"
-                        required
-                        className="border-border focus:border-accent"
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        className="bg-background/50 border-accent/20 focus:border-accent transition-all duration-300 hover:shadow-lg transform-gpu"
                       />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-card-foreground mb-2">
-                        Email
-                      </label>
+                    </motion.div>
+                    <motion.div
+                      whileFocus={{ scale: 1.02 }}
+                      className="transform-gpu"
+                    >
                       <Input
                         type="email"
-                        name="email"
+                        placeholder="Your Email"
                         value={formData.email}
-                        onChange={handleChange}
-                        placeholder="your.email@example.com"
-                        required
-                        className="border-border focus:border-accent"
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        className="bg-background/50 border-accent/20 focus:border-accent transition-all duration-300 hover:shadow-lg transform-gpu"
                       />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-card-foreground mb-2">
-                      Subject
-                    </label>
-                    <Input
-                      type="text"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      placeholder="What's this about?"
-                      required
-                      className="border-border focus:border-accent"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-card-foreground mb-2">
-                      Message
-                    </label>
-                    <Textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder="Tell me about your project or question..."
-                      rows={5}
-                      required
-                      className="border-border focus:border-accent resize-none"
-                    />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    className="w-full bg-gradient-accent text-white hover:opacity-90 transition-all duration-300 py-3 font-medium"
-                  >
-                    <Send className="mr-2 h-5 w-5" />
-                    Send Message
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Contact Information */}
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-2xl font-bold text-foreground mb-6">
-                Get In Touch
-              </h3>
-              <div className="space-y-4">
-                {contactInfo.map((contact, index) => {
-                  const IconComponent = contact.icon;
-                  return (
-                    <a
-                      key={index}
-                      href={contact.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block group"
+                    </motion.div>
+                    <motion.div
+                      whileFocus={{ scale: 1.02 }}
+                      className="transform-gpu"
                     >
-                      <Card className="bg-card border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                        <CardContent className="p-6">
-                          <div className="flex items-center">
-                            <div className={`${contact.color} p-3 rounded-lg mr-4 group-hover:scale-110 transition-transform duration-300`}>
-                              <IconComponent className="h-6 w-6 text-white" />
-                            </div>
-                            <div>
-                              <h4 className="font-semibold text-card-foreground group-hover:text-accent transition-colors">
-                                {contact.label}
-                              </h4>
-                              <p className="text-muted-foreground">
-                                {contact.value}
-                              </p>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </a>
-                  );
-                })}
-              </div>
+                      <Textarea
+                        placeholder="Your Message"
+                        value={formData.message}
+                        onChange={(e) => setFormData({...formData, message: e.target.value})}
+                        rows={5}
+                        className="bg-background/50 border-accent/20 focus:border-accent transition-all duration-300 hover:shadow-lg transform-gpu resize-none"
+                      />
+                    </motion.div>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <Button
+                        type="submit"
+                        className="w-full bg-gradient-accent text-white hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-2xl transform-gpu"
+                      >
+                        <Send className="mr-2 h-5 w-5" />
+                        Send Message
+                      </Button>
+                    </motion.div>
+                  </form>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <div className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, x: 50, rotateY: -20 }}
+                animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                whileHover={{ 
+                  scale: 1.02,
+                  rotateY: 3,
+                  transition: { duration: 0.3 }
+                }}
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                <Card className="bg-gradient-accent text-white border-0 shadow-xl hover:shadow-2xl transform-gpu transition-all duration-300">
+                  <CardContent className="p-8">
+                    <h3 className="text-2xl font-bold mb-4">Let's Work Together</h3>
+                    <p className="text-white/90 leading-relaxed">
+                      I'm always excited to collaborate on interesting projects and learn from 
+                      experienced professionals. Whether you have a project idea, need help with 
+                      development, or just want to connect, feel free to reach out!
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              {socialLinks.map((link, index) => (
+                <motion.div
+                  key={link.label}
+                  initial={{ opacity: 0, x: 50, rotateY: -20 }}
+                  animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
+                  transition={{ duration: 0.8, delay: 0.3 + index * 0.1 }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    rotateY: 5,
+                    x: 10,
+                    transition: { duration: 0.3 }
+                  }}
+                  style={{ transformStyle: 'preserve-3d' }}
+                >
+                  <a href={link.href} target="_blank" rel="noopener noreferrer">
+                    <Card className="bg-gradient-card border-accent/20 hover:border-accent/40 shadow-lg hover:shadow-2xl transform-gpu transition-all duration-300 cursor-pointer">
+                      <CardContent className="p-6 flex items-center">
+                        <motion.div
+                          whileHover={{ scale: 1.3, rotate: 360 }}
+                          transition={{ duration: 0.6 }}
+                          className={`bg-${link.color}/10 text-${link.color} w-12 h-12 rounded-xl flex items-center justify-center mr-4 shadow-md`}
+                          style={{ transform: 'translateZ(20px)' }}
+                        >
+                          {link.icon}
+                        </motion.div>
+                        <div className="flex-1">
+                          <p className="text-sm text-muted-foreground">{link.label}</p>
+                          <p className="text-foreground font-semibold">{link.value}</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </a>
+                </motion.div>
+              ))}
             </div>
-
-            {/* Location & Availability */}
-            <Card className="bg-gradient-card border-0 shadow-lg">
-              <CardContent className="p-6">
-                <div className="flex items-center mb-4">
-                  <div className="bg-gradient-accent p-3 rounded-lg mr-4">
-                    <MapPin className="h-6 w-6 text-white" />
-                  </div>
-                  <h4 className="text-lg font-bold text-card-foreground">
-                    Location & Availability
-                  </h4>
-                </div>
-                <div className="space-y-2 text-muted-foreground">
-                  <p>📍 Tamil Nadu, India</p>
-                  <p>⏰ Available for remote work</p>
-                  <p>🎓 Open to internships and part-time opportunities</p>
-                  <p>💼 Seeking entry-level positions in web development</p>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Quick Response */}
-            <Card className="bg-gradient-accent text-white border-0 shadow-xl">
-              <CardContent className="p-6 text-center">
-                <h4 className="text-lg font-bold mb-2">Quick Response</h4>
-                <p className="text-white/90 text-sm">
-                  I typically respond within 24 hours. Looking forward to discussing 
-                  your project or opportunity!
-                </p>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </div>
