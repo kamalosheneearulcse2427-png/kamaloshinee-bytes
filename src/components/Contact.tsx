@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Github, Linkedin, Send } from "lucide-react";
+import { Mail, Github, Linkedin, Send, Phone, MapPin, Instagram, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
@@ -10,195 +10,258 @@ import { useRef, useState } from "react";
 const Contact = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
   };
 
-  const socialLinks = [
+  const contactInfo = [
     {
-      icon: <Mail className="h-5 w-5" />,
+      icon: <Mail className="h-6 w-6" />,
       label: "Email",
       value: "kamaloshenee.arul@gmail.com",
       href: "mailto:kamaloshenee.arul@gmail.com",
-      color: "teal"
     },
     {
-      icon: <Github className="h-5 w-5" />,
-      label: "GitHub",
-      value: "@kamaloshenee_app",
-      href: "https://github.com/kamaloshenee_app",
-      color: "purple"
+      icon: <Phone className="h-6 w-6" />,
+      label: "Phone",
+      value: "+91 XXXXX XXXXX",
+      href: "tel:+91XXXXXXXXXX",
     },
     {
-      icon: <Linkedin className="h-5 w-5" />,
-      label: "LinkedIn",
-      value: "kamaloshenee Arul",
-      href: "https://www.linkedin.com/in/a-kamaloshenee-arul-arul-5a916327",
-      color: "pink"
+      icon: <MapPin className="h-6 w-6" />,
+      label: "Location",
+      value: "Tamil Nadu, India",
+      href: "#",
     },
   ];
 
-  const cardVariants = {
-    hidden: { opacity: 0, scale: 0.8, rotateX: -20 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      rotateX: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    }
-  };
+  const socialLinks = [
+    { icon: <Github className="h-5 w-5" />, href: "https://github.com/kamaloshenee_app", label: "GitHub", color: "hover:bg-foreground hover:text-background" },
+    { icon: <Linkedin className="h-5 w-5" />, href: "https://www.linkedin.com/in/a-kamaloshenee-arul-arul-5a916327", label: "LinkedIn", color: "hover:bg-blue-600 hover:text-white" },
+    { icon: <Instagram className="h-5 w-5" />, href: "#", label: "Instagram", color: "hover:bg-pink hover:text-white" },
+    { icon: <MessageCircle className="h-5 w-5" />, href: "#", label: "WhatsApp", color: "hover:bg-green-500 hover:text-white" },
+  ];
 
   return (
-    <section id="contact" className="py-20 bg-secondary/30" ref={ref}>
-      <div className="container mx-auto px-6">
+    <section id="contact" className="py-24 bg-background relative overflow-hidden" ref={ref}>
+      {/* Animated background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={{ 
+            x: [0, 100, 0],
+            y: [0, -50, 0],
+          }}
+          transition={{ duration: 20, repeat: Infinity }}
+          className="absolute top-20 left-10 w-96 h-96 bg-teal/5 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{ 
+            x: [0, -100, 0],
+            y: [0, 50, 0],
+          }}
+          transition={{ duration: 15, repeat: Infinity }}
+          className="absolute bottom-20 right-10 w-96 h-96 bg-purple/5 rounded-full blur-3xl"
+        />
+      </div>
+      
+      <div className="container mx-auto px-6 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: -30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-            Get In Touch
+          <motion.span 
+            className="text-teal font-semibold text-lg mb-4 block"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ delay: 0.2 }}
+          >
+            GET IN TOUCH
+          </motion.span>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+            Contact Me
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Have a project in mind or want to collaborate? Let's connect!
           </p>
         </motion.div>
 
-        <div className="max-w-5xl mx-auto" style={{ perspective: '2000px' }}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <motion.div
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              variants={cardVariants}
-              whileHover={{ 
-                scale: 1.02,
-                rotateY: 5,
-                transition: { duration: 0.3 }
-              }}
-              style={{ transformStyle: 'preserve-3d' }}
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+            {/* Contact Info */}
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="lg:col-span-2 space-y-6"
             >
-              <Card className="bg-gradient-card border-accent/20 h-full shadow-xl hover:shadow-2xl transform-gpu transition-all duration-300">
+              <div className="bg-gradient-accent rounded-3xl p-8 text-white shadow-2xl">
+                <motion.h3 
+                  initial={{ opacity: 0 }}
+                  animate={isInView ? { opacity: 1 } : {}}
+                  transition={{ delay: 0.4 }}
+                  className="text-2xl font-bold mb-6"
+                >
+                  Let's Work Together
+                </motion.h3>
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={isInView ? { opacity: 1 } : {}}
+                  transition={{ delay: 0.5 }}
+                  className="text-white/90 mb-8 leading-relaxed"
+                >
+                  I'm always excited to collaborate on interesting projects. Whether you have a 
+                  project idea or just want to connect, feel free to reach out!
+                </motion.p>
+                
+                <div className="space-y-4">
+                  {contactInfo.map((item, index) => (
+                    <motion.a
+                      key={item.label}
+                      href={item.href}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={isInView ? { opacity: 1, x: 0 } : {}}
+                      transition={{ delay: 0.6 + index * 0.1 }}
+                      whileHover={{ x: 10, scale: 1.02 }}
+                      className="flex items-center gap-4 p-3 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
+                    >
+                      <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+                        {item.icon}
+                      </div>
+                      <div>
+                        <p className="text-white/70 text-sm">{item.label}</p>
+                        <p className="font-semibold">{item.value}</p>
+                      </div>
+                    </motion.a>
+                  ))}
+                </div>
+                
+                {/* Social Links */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: 1 }}
+                  className="mt-8 pt-6 border-t border-white/20"
+                >
+                  <p className="text-white/70 text-sm mb-4">Follow me on</p>
+                  <div className="flex gap-3">
+                    {socialLinks.map((link, index) => (
+                      <motion.a
+                        key={link.label}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        initial={{ scale: 0 }}
+                        animate={isInView ? { scale: 1 } : {}}
+                        transition={{ delay: 1.1 + index * 0.1, type: "spring", stiffness: 200 }}
+                        whileHover={{ scale: 1.2, rotate: 360 }}
+                        whileTap={{ scale: 0.9 }}
+                        className={`w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-all duration-300 ${link.color}`}
+                        aria-label={link.label}
+                      >
+                        {link.icon}
+                      </motion.a>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+
+            {/* Contact Form */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="lg:col-span-3"
+            >
+              <Card className="bg-gradient-card border-accent/20 shadow-2xl overflow-hidden">
                 <CardContent className="p-8">
                   <h3 className="text-2xl font-bold mb-6 text-foreground">Send a Message</h3>
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ delay: 0.6 }}
+                        whileHover={{ scale: 1.02 }}
+                      >
+                        <Input
+                          placeholder="Your Name"
+                          value={formData.name}
+                          onChange={(e) => setFormData({...formData, name: e.target.value})}
+                          className="bg-background/50 border-accent/20 focus:border-teal h-12 rounded-xl transition-all duration-300"
+                        />
+                      </motion.div>
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ delay: 0.7 }}
+                        whileHover={{ scale: 1.02 }}
+                      >
+                        <Input
+                          type="email"
+                          placeholder="Your Email"
+                          value={formData.email}
+                          onChange={(e) => setFormData({...formData, email: e.target.value})}
+                          className="bg-background/50 border-accent/20 focus:border-teal h-12 rounded-xl transition-all duration-300"
+                        />
+                      </motion.div>
+                    </div>
                     <motion.div
-                      whileFocus={{ scale: 1.02 }}
-                      className="transform-gpu"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ delay: 0.8 }}
+                      whileHover={{ scale: 1.02 }}
                     >
                       <Input
-                        placeholder="Your Name"
-                        value={formData.name}
-                        onChange={(e) => setFormData({...formData, name: e.target.value})}
-                        className="bg-background/50 border-accent/20 focus:border-accent transition-all duration-300 hover:shadow-lg transform-gpu"
+                        placeholder="Subject"
+                        value={formData.subject}
+                        onChange={(e) => setFormData({...formData, subject: e.target.value})}
+                        className="bg-background/50 border-accent/20 focus:border-teal h-12 rounded-xl transition-all duration-300"
                       />
                     </motion.div>
                     <motion.div
-                      whileFocus={{ scale: 1.02 }}
-                      className="transform-gpu"
-                    >
-                      <Input
-                        type="email"
-                        placeholder="Your Email"
-                        value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        className="bg-background/50 border-accent/20 focus:border-accent transition-all duration-300 hover:shadow-lg transform-gpu"
-                      />
-                    </motion.div>
-                    <motion.div
-                      whileFocus={{ scale: 1.02 }}
-                      className="transform-gpu"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ delay: 0.9 }}
+                      whileHover={{ scale: 1.02 }}
                     >
                       <Textarea
                         placeholder="Your Message"
                         value={formData.message}
                         onChange={(e) => setFormData({...formData, message: e.target.value})}
-                        rows={5}
-                        className="bg-background/50 border-accent/20 focus:border-accent transition-all duration-300 hover:shadow-lg transform-gpu resize-none"
+                        rows={6}
+                        className="bg-background/50 border-accent/20 focus:border-teal rounded-xl transition-all duration-300 resize-none"
                       />
                     </motion.div>
                     <motion.div
-                      whileHover={{ scale: 1.05 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ delay: 1 }}
+                      whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
                       <Button
                         type="submit"
-                        className="w-full bg-gradient-accent text-white hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-2xl transform-gpu"
+                        className="w-full bg-gradient-accent text-white h-14 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 group"
                       >
-                        <Send className="mr-2 h-5 w-5" />
-                        Send Message
+                        <motion.span
+                          className="flex items-center justify-center gap-2"
+                          whileHover={{ x: 5 }}
+                        >
+                          Send Message
+                          <Send className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                        </motion.span>
                       </Button>
                     </motion.div>
                   </form>
                 </CardContent>
               </Card>
             </motion.div>
-
-            <div className="space-y-6">
-              <motion.div
-                initial={{ opacity: 0, x: 50, rotateY: -20 }}
-                animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                whileHover={{ 
-                  scale: 1.02,
-                  rotateY: 3,
-                  transition: { duration: 0.3 }
-                }}
-                style={{ transformStyle: 'preserve-3d' }}
-              >
-                <Card className="bg-gradient-accent text-white border-0 shadow-xl hover:shadow-2xl transform-gpu transition-all duration-300">
-                  <CardContent className="p-8">
-                    <h3 className="text-2xl font-bold mb-4">Let's Work Together</h3>
-                    <p className="text-white/90 leading-relaxed">
-                      I'm always excited to collaborate on interesting projects and learn from 
-                      experienced professionals. Whether you have a project idea, need help with 
-                      development, or just want to connect, feel free to reach out!
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-
-              {socialLinks.map((link, index) => (
-                <motion.div
-                  key={link.label}
-                  initial={{ opacity: 0, x: 50, rotateY: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
-                  transition={{ duration: 0.8, delay: 0.3 + index * 0.1 }}
-                  whileHover={{ 
-                    scale: 1.05,
-                    rotateY: 5,
-                    x: 10,
-                    transition: { duration: 0.3 }
-                  }}
-                  style={{ transformStyle: 'preserve-3d' }}
-                >
-                  <a href={link.href} target="_blank" rel="noopener noreferrer">
-                    <Card className="bg-gradient-card border-accent/20 hover:border-accent/40 shadow-lg hover:shadow-2xl transform-gpu transition-all duration-300 cursor-pointer">
-                      <CardContent className="p-6 flex items-center">
-                        <motion.div
-                          whileHover={{ scale: 1.3, rotate: 360 }}
-                          transition={{ duration: 0.6 }}
-                          className={`bg-${link.color}/10 text-${link.color} w-12 h-12 rounded-xl flex items-center justify-center mr-4 shadow-md`}
-                          style={{ transform: 'translateZ(20px)' }}
-                        >
-                          {link.icon}
-                        </motion.div>
-                        <div className="flex-1">
-                          <p className="text-sm text-muted-foreground">{link.label}</p>
-                          <p className="text-foreground font-semibold">{link.value}</p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </a>
-                </motion.div>
-              ))}
-            </div>
           </div>
         </div>
       </div>
