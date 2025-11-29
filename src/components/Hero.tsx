@@ -33,11 +33,14 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0f]">
+      {/* Deep space gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f] via-[#0d1117] to-[#161b22]"></div>
+      
       {/* 3D Background Canvas */}
       <div className="absolute inset-0">
         <Canvas
-          camera={{ position: [0, 0, 10], fov: 75 }}
+          camera={{ position: [0, 0, 15], fov: 75 }}
           style={{ background: 'transparent' }}
         >
           <Suspense fallback={null}>
@@ -46,8 +49,8 @@ const Hero = () => {
         </Canvas>
       </div>
       
-      {/* Dark overlay for better text contrast */}
-      <div className="absolute inset-0 bg-primary/40 backdrop-blur-[2px]"></div>
+      {/* Subtle dark overlay */}
+      <div className="absolute inset-0 bg-black/20"></div>
       
       {/* Animated particles effect */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
