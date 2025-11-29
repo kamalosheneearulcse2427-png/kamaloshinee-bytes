@@ -4,6 +4,7 @@ import { Code2, Palette, Server, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import SpaceBackground from "./SpaceBackground";
 
 const Skills = () => {
   const ref = useRef(null);
@@ -81,7 +82,9 @@ const Skills = () => {
   };
 
   return (
-    <section id="skills" className="py-20 bg-background" ref={ref}>
+    <section id="skills" className="py-20 relative overflow-hidden" ref={ref}>
+      <SpaceBackground starCount={100} />
+      <div className="absolute inset-0 bg-black/30" />
       <div className="container mx-auto px-6">
         <motion.div 
           initial={{ opacity: 0, y: -30 }}

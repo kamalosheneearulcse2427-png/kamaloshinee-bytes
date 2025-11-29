@@ -4,6 +4,7 @@ import { GraduationCap, Users, BookOpen, Target } from "lucide-react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import SpaceBackground from "./SpaceBackground";
 
 const Experience = () => {
   const ref = useRef(null);
@@ -73,7 +74,9 @@ const Experience = () => {
   };
 
   return (
-    <section id="experience" className="py-20 bg-background" ref={ref}>
+    <section id="experience" className="py-20 relative overflow-hidden" ref={ref}>
+      <SpaceBackground starCount={85} />
+      <div className="absolute inset-0 bg-black/30" />
       <div className="container mx-auto px-6">
         <motion.div 
           initial={{ opacity: 0, y: -30 }}

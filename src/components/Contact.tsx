@@ -6,6 +6,7 @@ import { Mail, Github, Linkedin, Send, Phone, MapPin, Instagram, MessageCircle }
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import SpaceBackground from "./SpaceBackground";
 
 const Contact = () => {
   const ref = useRef(null);
@@ -46,26 +47,9 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-24 bg-background relative overflow-hidden" ref={ref}>
-      {/* Animated background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{ 
-            x: [0, 100, 0],
-            y: [0, -50, 0],
-          }}
-          transition={{ duration: 20, repeat: Infinity }}
-          className="absolute top-20 left-10 w-96 h-96 bg-teal/5 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{ 
-            x: [0, -100, 0],
-            y: [0, 50, 0],
-          }}
-          transition={{ duration: 15, repeat: Infinity }}
-          className="absolute bottom-20 right-10 w-96 h-96 bg-purple/5 rounded-full blur-3xl"
-        />
-      </div>
+    <section id="contact" className="py-24 relative overflow-hidden" ref={ref}>
+      <SpaceBackground starCount={110} showNebula />
+      <div className="absolute inset-0 bg-black/20" />
       
       <div className="container mx-auto px-6 relative z-10">
         <motion.div 
