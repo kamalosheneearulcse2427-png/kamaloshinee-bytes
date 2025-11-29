@@ -4,6 +4,7 @@ import profilePhoto from "@/assets/profile-kamaloshenee.jpg";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import SpaceBackground from "./SpaceBackground";
 
 const About = () => {
   const ref = useRef(null);
@@ -23,10 +24,9 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-24 bg-background relative overflow-hidden" ref={ref}>
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-teal/10 to-purple/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-pink/10 to-teal/10 rounded-full blur-3xl" />
+    <section id="about" className="py-24 relative overflow-hidden" ref={ref}>
+      <SpaceBackground starCount={80} />
+      <div className="absolute inset-0 bg-black/30" />
       
       <div className="container mx-auto px-6 relative z-10">
         <motion.div 

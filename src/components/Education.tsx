@@ -3,6 +3,7 @@ import { GraduationCap, Calendar, MapPin, Award } from "lucide-react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import SpaceBackground from "./SpaceBackground";
 
 const Education = () => {
   const ref = useRef(null);
@@ -59,10 +60,9 @@ const Education = () => {
   };
 
   return (
-    <section id="education" className="py-24 bg-secondary/30 relative overflow-hidden" ref={ref}>
-      {/* Background decorations */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-teal/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple/5 rounded-full blur-3xl" />
+    <section id="education" className="py-24 relative overflow-hidden" ref={ref}>
+      <SpaceBackground starCount={90} />
+      <div className="absolute inset-0 bg-black/20" />
       
       <div className="container mx-auto px-6 relative z-10">
         <motion.div 
