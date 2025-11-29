@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import SpaceBackground from "./SpaceBackground";
+import InteractiveMoon from "./InteractiveMoon";
 
 const Projects = () => {
   const ref = useRef(null);
@@ -65,10 +66,11 @@ const Projects = () => {
   };
 
   return (
-    <section id="projects" className="py-20 relative overflow-hidden" ref={ref}>
+    <section id="projects" className="py-20 relative overflow-hidden min-h-screen" ref={ref}>
       <SpaceBackground starCount={120} />
       <div className="absolute inset-0 bg-black/20" />
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 relative z-10">
+        <InteractiveMoon moonSize={100}>
         <motion.div 
           initial={{ opacity: 0, y: -30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -100,7 +102,7 @@ const Projects = () => {
               }}
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <Card className="group overflow-hidden bg-card border-accent/20 h-full shadow-lg hover:shadow-2xl transform-gpu transition-all duration-300">
+              <Card className="group overflow-hidden bg-card/80 backdrop-blur-sm border-accent/20 h-full shadow-lg hover:shadow-2xl transform-gpu transition-all duration-300">
                 <div className="relative overflow-hidden h-48">
                   <motion.img
                     whileHover={{ scale: 1.2, rotate: 2 }}
@@ -141,6 +143,7 @@ const Projects = () => {
             </motion.div>
           ))}
         </div>
+        </InteractiveMoon>
       </div>
     </section>
   );

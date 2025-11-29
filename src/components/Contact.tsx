@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import SpaceBackground from "./SpaceBackground";
+import InteractiveMoon from "./InteractiveMoon";
 
 const Contact = () => {
   const ref = useRef(null);
@@ -47,11 +48,12 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden" ref={ref}>
+    <section id="contact" className="py-24 relative overflow-hidden min-h-screen" ref={ref}>
       <SpaceBackground starCount={110} showNebula />
       <div className="absolute inset-0 bg-black/20" />
       
       <div className="container mx-auto px-6 relative z-10">
+        <InteractiveMoon moonSize={100}>
         <motion.div 
           initial={{ opacity: 0, y: -30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -162,7 +164,7 @@ const Contact = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="lg:col-span-3"
             >
-              <Card className="bg-gradient-card border-accent/20 shadow-2xl overflow-hidden">
+              <Card className="bg-card/80 backdrop-blur-sm border-accent/20 shadow-2xl overflow-hidden">
                 <CardContent className="p-8">
                   <h3 className="text-2xl font-bold mb-6 text-foreground">Send a Message</h3>
                   <form onSubmit={handleSubmit} className="space-y-5">
@@ -177,7 +179,7 @@ const Contact = () => {
                           placeholder="Your Name"
                           value={formData.name}
                           onChange={(e) => setFormData({...formData, name: e.target.value})}
-                          className="bg-background/50 border-accent/20 focus:border-teal h-12 rounded-xl transition-all duration-300"
+                          className="bg-background/50 border-accent/20 focus:border-teal h-12 rounded-xl transition-all duration-300 text-foreground placeholder:text-muted-foreground"
                         />
                       </motion.div>
                       <motion.div
@@ -191,7 +193,7 @@ const Contact = () => {
                           placeholder="Your Email"
                           value={formData.email}
                           onChange={(e) => setFormData({...formData, email: e.target.value})}
-                          className="bg-background/50 border-accent/20 focus:border-teal h-12 rounded-xl transition-all duration-300"
+                          className="bg-background/50 border-accent/20 focus:border-teal h-12 rounded-xl transition-all duration-300 text-foreground placeholder:text-muted-foreground"
                         />
                       </motion.div>
                     </div>
@@ -205,7 +207,7 @@ const Contact = () => {
                         placeholder="Subject"
                         value={formData.subject}
                         onChange={(e) => setFormData({...formData, subject: e.target.value})}
-                        className="bg-background/50 border-accent/20 focus:border-teal h-12 rounded-xl transition-all duration-300"
+                        className="bg-background/50 border-accent/20 focus:border-teal h-12 rounded-xl transition-all duration-300 text-foreground placeholder:text-muted-foreground"
                       />
                     </motion.div>
                     <motion.div
@@ -219,7 +221,7 @@ const Contact = () => {
                         value={formData.message}
                         onChange={(e) => setFormData({...formData, message: e.target.value})}
                         rows={6}
-                        className="bg-background/50 border-accent/20 focus:border-teal rounded-xl transition-all duration-300 resize-none"
+                        className="bg-background/50 border-accent/20 focus:border-teal rounded-xl transition-all duration-300 resize-none text-foreground placeholder:text-muted-foreground"
                       />
                     </motion.div>
                     <motion.div
@@ -248,6 +250,7 @@ const Contact = () => {
             </motion.div>
           </div>
         </div>
+        </InteractiveMoon>
       </div>
     </section>
   );

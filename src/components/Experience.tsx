@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import SpaceBackground from "./SpaceBackground";
+import InteractiveMoon from "./InteractiveMoon";
 
 const Experience = () => {
   const ref = useRef(null);
@@ -74,10 +75,11 @@ const Experience = () => {
   };
 
   return (
-    <section id="experience" className="py-20 relative overflow-hidden" ref={ref}>
+    <section id="experience" className="py-20 relative overflow-hidden min-h-screen" ref={ref}>
       <SpaceBackground starCount={85} />
       <div className="absolute inset-0 bg-black/30" />
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 relative z-10">
+        <InteractiveMoon moonSize={100}>
         <motion.div 
           initial={{ opacity: 0, y: -30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -108,7 +110,7 @@ const Experience = () => {
               }}
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <Card className="bg-gradient-card border-accent/20 overflow-hidden shadow-lg hover:shadow-2xl transform-gpu transition-all duration-300">
+              <Card className="bg-card/80 backdrop-blur-sm border-accent/20 overflow-hidden shadow-lg hover:shadow-2xl transform-gpu transition-all duration-300">
                 <CardContent className="p-8">
                   <div className="flex flex-col md:flex-row gap-6">
                     <motion.div 
@@ -194,6 +196,7 @@ const Experience = () => {
             </CardContent>
           </Card>
         </motion.div>
+        </InteractiveMoon>
       </div>
     </section>
   );
