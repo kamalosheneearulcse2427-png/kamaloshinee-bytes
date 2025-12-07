@@ -79,7 +79,7 @@ const Experience = () => {
       <SpaceBackground starCount={85} />
       <div className="absolute inset-0 bg-black/30" />
       <div className="container mx-auto px-6 relative z-10">
-        <InteractiveMoon moonSize={100}>
+        <InteractiveMoon moonSize={100} sectionName="Experience Path">
         <motion.div 
           initial={{ opacity: 0, y: -30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
