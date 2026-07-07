@@ -1,119 +1,51 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import Navigation from "@/components/Navigation";
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Education from "@/components/Education";
-import Skills from "@/components/Skills";
-import Projects from "@/components/Projects";
-import Experience from "@/components/Experience";
-import Contact from "@/components/Contact";
-import GameIntro from "@/components/GameIntro";
-import GameHUD from "@/components/GameHUD";
-import LevelUpNotification from "@/components/LevelUpNotification";
+import LogoIntro from "@/components/elvinoa/LogoIntro";
+import ElvinoaNav from "@/components/elvinoa/ElvinoaNav";
+import WelcomeSection from "@/components/elvinoa/WelcomeSection";
+import AboutSection from "@/components/elvinoa/AboutSection";
+import ElectronicsSection from "@/components/elvinoa/ElectronicsSection";
+import TodayProjectsSection from "@/components/elvinoa/TodayProjectsSection";
+import AchievementsSection from "@/components/elvinoa/AchievementsSection";
+import TimelineSection from "@/components/elvinoa/TimelineSection";
+import BenefitsSection from "@/components/elvinoa/BenefitsSection";
+import ContactSection from "@/components/elvinoa/ContactSection";
+import logoAsset from "@/assets/elvinoa-logo.png.asset.json";
 
 const Index = () => {
-  const [gameStarted, setGameStarted] = useState(false);
-  const [currentSection, setCurrentSection] = useState('home');
-  const [sectionsVisited, setSectionsVisited] = useState<string[]>(['home']);
-  const [levelUpInfo, setLevelUpInfo] = useState<{ show: boolean; name: string }>({ show: false, name: '' });
-
-  // Handle keyboard to start game
-  useEffect(() => {
-    const handleKeyPress = () => {
-      if (!gameStarted) setGameStarted(true);
-    };
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [gameStarted]);
-
-  // Track current section on scroll
-  useEffect(() => {
-    if (!gameStarted) return;
-
-    const sections = ['home', 'about', 'education', 'skills', 'projects', 'experience', 'contact'];
-    
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
-      
-      for (const sectionId of sections) {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const { top, bottom } = element.getBoundingClientRect();
-          const absoluteTop = top + window.scrollY;
-          const absoluteBottom = bottom + window.scrollY;
-          
-          if (scrollPosition >= absoluteTop && scrollPosition <= absoluteBottom) {
-            if (currentSection !== sectionId) {
-              setCurrentSection(sectionId);
-              
-              // Mark section as visited and show level up
-              if (!sectionsVisited.includes(sectionId)) {
-                setSectionsVisited(prev => [...prev, sectionId]);
-                const sectionNames: Record<string, string> = {
-                  home: 'Home Base',
-                  about: 'About Zone',
-                  education: 'Education Realm',
-                  skills: 'Skills Arena',
-                  projects: 'Projects Galaxy',
-                  experience: 'Experience Path',
-                  contact: 'Contact Portal',
-                };
-                setLevelUpInfo({ show: true, name: sectionNames[sectionId] || sectionId });
-              }
-            }
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [gameStarted, currentSection, sectionsVisited]);
+  const [entered, setEntered] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f]">
-      {/* Game Intro Screen */}
+    <div className="min-h-screen bg-background text-foreground">
       <AnimatePresence>
-        {!gameStarted && (
-          <GameIntro onStart={() => setGameStarted(true)} />
-        )}
+        {!entered && <LogoIntro key="intro" onEnter={() => setEntered(true)} />}
       </AnimatePresence>
 
-      {/* Game HUD */}
-      {gameStarted && (
-        <GameHUD 
-          currentSection={currentSection} 
-          sectionsVisited={sectionsVisited} 
-        />
+      {entered && (
+        <>
+          <ElvinoaNav />
+          <main>
+            <WelcomeSection />
+            <AboutSection />
+            <ElectronicsSection />
+            <TodayProjectsSection />
+            <AchievementsSection />
+            <TimelineSection />
+            <BenefitsSection />
+            <ContactSection />
+          </main>
+
+          <footer className="relative border-t border-border py-8 px-4 text-center">
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <img src={logoAsset.url} alt="Elvinoa" className="w-8 h-8 object-contain" />
+              <span className="font-black text-gradient-neon tracking-wider">ELVINOA TECHNOLOGIES</span>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              © {new Date().getFullYear()} Elvinoa Technologies. Engineering tomorrow, today.
+            </p>
+          </footer>
+        </>
       )}
-
-      {/* Level Up Notification */}
-      <LevelUpNotification
-        show={levelUpInfo.show}
-        sectionName={levelUpInfo.name}
-        onComplete={() => setLevelUpInfo({ show: false, name: '' })}
-      />
-
-      {/* Main Content */}
-      <AnimatePresence>
-        {gameStarted && (
-          <>
-            <Navigation />
-            <main>
-              <Hero />
-              <About />
-              <Education />
-              <Skills />
-              <Projects />
-              <Experience />
-              <Contact />
-            </main>
-          </>
-        )}
-      </AnimatePresence>
     </div>
   );
 };
