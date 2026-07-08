@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import RobotCharacter from "./RobotCharacter";
-import HumanCharacter from "./HumanCharacter";
 import { useSpeech } from "@/hooks/useSpeech";
 import { Volume2, VolumeX } from "lucide-react";
 import welcomeScene from "@/assets/welcome-scene.png.asset.json";
+import robotImg from "@/assets/welcome-robot.png";
+import humanImg from "@/assets/welcome-human.png";
 
-// Welcome scene: robot walks in from the left, human walks in from the right,
-// they meet and shake hands, then the robot greets the visitor.
+// Welcome scene: real robot & human photos walk in from the sides,
+// meet in the middle, shake hands, and the robot greets the visitor.
+
 
 const WelcomeSection = () => {
   const [handshakeStarted, setHandshakeStarted] = useState(false);
