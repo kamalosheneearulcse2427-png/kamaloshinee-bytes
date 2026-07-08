@@ -9,12 +9,21 @@ interface LogoIntroProps {
 // Boot-up splash: logo scans in, tagline appears, then a big "Enter" button
 // (needed so the browser lets us call speechSynthesis later — autoplay policy).
 const LogoIntro = ({ onEnter }: LogoIntroProps) => {
-  const [showButton, setShowButton] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const t = setTimeout(() => setShowButton(true), 1800);
-    return () => clearTimeout(t);
-  }, []);
+    const start = Date.now();
+    const duration = 3800;
+    const id = setInterval(() => {
+      const p = Math.min(100, ((Date.now() - start) / duration) * 100);
+      setProgress(p);
+      if (p >= 100) {
+        clearInterval(id);
+        setTimeout(onEnter, 400);
+      }
+    }, 40);
+    return () => clearInterval(id);
+  }, [onEnter]);
 
   return (
     <motion.section
@@ -59,34 +68,29 @@ const LogoIntro = ({ onEnter }: LogoIntroProps) => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-        className="mt-8 text-center"
+        transition={{ delay: 1.0, duration: 0.6 }}
+        className="mt-10 w-72 md:w-96 text-center"
       >
-        <p className="font-mono text-electric text-sm md:text-base tracking-[0.4em] uppercase">
-          System Initializing<span className="animate-pulse">_</span>
+        <p className="font-mono text-electric text-xs md:text-sm tracking-[0.4em] uppercase mb-3">
+          Booting Elvinoa Systems<span className="animate-pulse">_</span>
+        </p>
+        {/* Loading bar */}
+        <div className="relative h-2 rounded-full bg-card border border-electric/40 overflow-hidden">
+          <motion.div
+            className="absolute inset-y-0 left-0 bg-gradient-neon glow-neon"
+            style={{ width: `${progress}%` }}
+            transition={{ ease: "linear" }}
+          />
+          <motion.div
+            className="absolute inset-y-0 w-16 bg-gradient-to-r from-transparent via-white/50 to-transparent"
+            animate={{ x: ["-4rem", "24rem"] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: "linear" }}
+          />
+        </div>
+        <p className="mt-2 font-mono text-[10px] md:text-xs text-neon tracking-widest">
+          {Math.floor(progress)}% · Loading welcome sequence…
         </p>
       </motion.div>
-
-      <AnimatePresence>
-        {showButton && (
-          <motion.button
-            initial={{ opacity: 0, y: 30, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0 }}
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={onEnter}
-            className="mt-12 relative group px-10 py-4 bg-gradient-neon text-primary-foreground font-bold text-lg tracking-widest uppercase rounded-md glow-neon"
-          >
-            <span className="relative z-10">Enter Elvinoa</span>
-            <motion.span
-              className="absolute inset-0 rounded-md border-2 border-neon"
-              animate={{ scale: [1, 1.15, 1], opacity: [0.8, 0, 0.8] }}
-              transition={{ duration: 1.8, repeat: Infinity }}
-            />
-          </motion.button>
-        )}
-      </AnimatePresence>
 
       <p className="absolute bottom-6 text-xs text-muted-foreground tracking-widest">
         © ELVINOA TECHNOLOGIES · EST. 2024
