@@ -4,9 +4,11 @@ import RobotCharacter from "./RobotCharacter";
 import HumanCharacter from "./HumanCharacter";
 import { useSpeech } from "@/hooks/useSpeech";
 import { Volume2, VolumeX } from "lucide-react";
+import welcomeScene from "@/assets/welcome-scene.png.asset.json";
 
-// Welcome scene: robot walks toward human, they shake hands, robot speaks
-// "Welcome to Elvinoa Technologies". Speech plays once when scene mounts.
+// Welcome scene: robot walks in from the left, human walks in from the right,
+// they meet and shake hands, then the robot greets the visitor.
+
 const WelcomeSection = () => {
   const [handshakeStarted, setHandshakeStarted] = useState(false);
   const [greeted, setGreeted] = useState(false);
