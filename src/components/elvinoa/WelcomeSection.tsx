@@ -78,53 +78,66 @@ const WelcomeSection = () => {
       </motion.div>
 
       {/* Stage */}
-      <div className="relative z-10 w-full max-w-4xl h-[360px] flex items-end justify-center gap-2 md:gap-6">
-        {/* Robot walks in from left with a bobbing gait */}
-        <motion.div
-          initial={{ x: "-60vw", opacity: 0 }}
-          animate={{ x: 0, opacity: 1, y: [0, -6, 0, -6, 0] }}
-          transition={{
-            x: { duration: 2.2, ease: "easeOut" },
-            opacity: { duration: 0.6 },
-            y: { duration: 0.5, repeat: 4, ease: "easeInOut" },
+      <div className="relative z-10 w-full max-w-5xl h-[420px] flex items-end justify-center gap-2 md:gap-4">
+        {/* Robot walks in from left with a bobbing walk cycle */}
+        <motion.img
+          src={robotImg}
+          alt="Elvinoa robot"
+          initial={{ x: "-70vw", opacity: 0 }}
+          animate={{
+            x: handshakeStarted ? 0 : ["-70vw", "-20vw", "0vw"],
+            opacity: 1,
+            y: handshakeStarted ? 0 : [0, -8, 0, -8, 0, -8, 0],
+            rotate: handshakeStarted ? 0 : [-2, 2, -2, 2, -2, 2, 0],
           }}
-        >
-          <RobotCharacter handshake={handshakeStarted} size={200} speaking={speaking} />
-        </motion.div>
+          transition={{
+            x: { duration: 2.4, ease: "easeOut" },
+            y: { duration: 0.45, repeat: 5, ease: "easeInOut" },
+            rotate: { duration: 0.45, repeat: 5, ease: "easeInOut" },
+          }}
+          className="h-[380px] w-auto object-contain drop-shadow-[0_10px_30px_hsl(200_100%_55%/0.5)]"
+        />
 
         {/* Handshake sparks */}
         {handshakeStarted && (
-          <div className="relative w-16 flex items-center justify-center pb-24">
-            {[...Array(6)].map((_, i) => (
+          <div className="relative w-12 flex items-center justify-center pb-40">
+            {[...Array(8)].map((_, i) => (
               <motion.div
                 key={i}
                 className="absolute w-2 h-2 rounded-full bg-neon"
                 initial={{ scale: 0, opacity: 1 }}
                 animate={{
-                  scale: [0, 1.5, 0],
-                  x: [0, (Math.random() - 0.5) * 60],
-                  y: [0, (Math.random() - 0.5) * 60],
-                  opacity: [1, 0.8, 0],
+                  scale: [0, 1.8, 0],
+                  x: [0, (Math.random() - 0.5) * 80],
+                  y: [0, (Math.random() - 0.5) * 80],
+                  opacity: [1, 0.9, 0],
                 }}
-                transition={{ duration: 1.4, repeat: Infinity, delay: i * 0.2 }}
+                transition={{ duration: 1.4, repeat: Infinity, delay: i * 0.15 }}
               />
             ))}
           </div>
         )}
 
-        {/* Human walks in from right with a bobbing gait */}
-        <motion.div
-          initial={{ x: "60vw", opacity: 0 }}
-          animate={{ x: 0, opacity: 1, y: [0, -5, 0, -5, 0] }}
-          transition={{
-            x: { duration: 2.2, ease: "easeOut" },
-            opacity: { duration: 0.6 },
-            y: { duration: 0.5, repeat: 4, ease: "easeInOut" },
+        {/* Human walks in from right with a bobbing walk cycle */}
+        <motion.img
+          src={humanImg}
+          alt="Elvinoa client"
+          initial={{ x: "70vw", opacity: 0 }}
+          animate={{
+            x: handshakeStarted ? 0 : ["70vw", "20vw", "0vw"],
+            opacity: 1,
+            y: handshakeStarted ? 0 : [0, -7, 0, -7, 0, -7, 0],
+            rotate: handshakeStarted ? 0 : [2, -2, 2, -2, 2, -2, 0],
           }}
-        >
-          <HumanCharacter handshake={handshakeStarted} size={200} />
-        </motion.div>
+          transition={{
+            x: { duration: 2.4, ease: "easeOut" },
+            y: { duration: 0.45, repeat: 5, ease: "easeInOut" },
+            rotate: { duration: 0.45, repeat: 5, ease: "easeInOut" },
+          }}
+          className="h-[380px] w-auto object-contain drop-shadow-[0_10px_30px_hsl(88_95%_55%/0.4)]"
+        />
       </div>
+
 
 
       {/* Speech bubble */}
