@@ -35,8 +35,35 @@ const WelcomeSection = () => {
 
   return (
     <section id="welcome" className="relative min-h-screen flex flex-col items-center justify-center px-4 py-24 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-hero" />
-      <div className="absolute inset-0 hex-grid" />
+      {/* Animated background image (Ken Burns pan/zoom) */}
+      <motion.div
+        className="absolute inset-0 z-0"
+        initial={{ scale: 1.15, x: -30 }}
+        animate={{ scale: [1.15, 1.25, 1.15], x: [-30, 30, -30], y: [0, -10, 0] }}
+        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          backgroundImage: `url(${welcomeScene.url})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+      {/* Cinematic dark overlay so text/characters stay readable */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-background/85 via-background/55 to-background/90" />
+      <div className="absolute inset-0 z-0 hex-grid opacity-40" />
+
+      {/* Drifting light particles for extra motion */}
+      {[...Array(18)].map((_, i) => (
+        <motion.span
+          key={i}
+          className="absolute z-0 w-1 h-1 rounded-full bg-neon"
+          style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%` }}
+          animate={{
+            y: [0, -30 - Math.random() * 40, 0],
+            opacity: [0.2, 1, 0.2],
+          }}
+          transition={{ duration: 4 + Math.random() * 4, repeat: Infinity, delay: Math.random() * 3 }}
+        />
+      ))}
 
       {/* Section label */}
       <motion.div
@@ -51,12 +78,15 @@ const WelcomeSection = () => {
 
       {/* Stage */}
       <div className="relative z-10 w-full max-w-4xl h-[360px] flex items-end justify-center gap-2 md:gap-6">
-        {/* Robot slides in from left */}
+        {/* Robot walks in from left with a bobbing gait */}
         <motion.div
-          initial={{ x: -300, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          initial={{ x: "-60vw", opacity: 0 }}
+          animate={{ x: 0, opacity: 1, y: [0, -6, 0, -6, 0] }}
+          transition={{
+            x: { duration: 2.2, ease: "easeOut" },
+            opacity: { duration: 0.6 },
+            y: { duration: 0.5, repeat: 4, ease: "easeInOut" },
+          }}
         >
           <RobotCharacter handshake={handshakeStarted} size={200} speaking={speaking} />
         </motion.div>
@@ -81,16 +111,20 @@ const WelcomeSection = () => {
           </div>
         )}
 
-        {/* Human slides in from right */}
+        {/* Human walks in from right with a bobbing gait */}
         <motion.div
-          initial={{ x: 300, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          initial={{ x: "60vw", opacity: 0 }}
+          animate={{ x: 0, opacity: 1, y: [0, -5, 0, -5, 0] }}
+          transition={{
+            x: { duration: 2.2, ease: "easeOut" },
+            opacity: { duration: 0.6 },
+            y: { duration: 0.5, repeat: 4, ease: "easeInOut" },
+          }}
         >
           <HumanCharacter handshake={handshakeStarted} size={200} />
         </motion.div>
       </div>
+
 
       {/* Speech bubble */}
       {greeted && (
