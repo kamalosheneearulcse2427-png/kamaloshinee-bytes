@@ -79,15 +79,15 @@ const WelcomeSection = () => {
 
       {/* Stage */}
       <div className="relative z-10 w-full max-w-5xl h-[420px] flex items-end justify-center gap-2 md:gap-4">
-        {/* Robot walks in from left with a bobbing walk cycle */}
+        {/* Human walks in from left (naturally angled toward the right) */}
         <motion.img
-          src={robotImg}
-          alt="Elvinoa robot"
+          src={humanImg}
+          alt="Elvinoa client"
           initial={{ x: "-70vw", opacity: 0 }}
           animate={{
             x: handshakeStarted ? 0 : ["-70vw", "-20vw", "0vw"],
             opacity: 1,
-            y: handshakeStarted ? 0 : [0, -8, 0, -8, 0, -8, 0],
+            y: handshakeStarted ? 0 : [0, -7, 0, -7, 0, -7, 0],
             rotate: handshakeStarted ? 0 : [-2, 2, -2, 2, -2, 2, 0],
           }}
           transition={{
@@ -95,7 +95,7 @@ const WelcomeSection = () => {
             y: { duration: 0.45, repeat: 5, ease: "easeInOut" },
             rotate: { duration: 0.45, repeat: 5, ease: "easeInOut" },
           }}
-          className="h-[380px] w-auto object-contain drop-shadow-[0_10px_30px_hsl(200_100%_55%/0.5)]"
+          className="h-[380px] w-auto object-contain drop-shadow-[0_10px_30px_hsl(88_95%_55%/0.4)]"
         />
 
         {/* Handshake sparks */}
@@ -118,15 +118,15 @@ const WelcomeSection = () => {
           </div>
         )}
 
-        {/* Human walks in from right with a bobbing walk cycle */}
+        {/* Robot walks in from right, mirrored so it faces the human on the left */}
         <motion.img
-          src={humanImg}
-          alt="Elvinoa client"
+          src={robotImg}
+          alt="Elvinoa robot"
           initial={{ x: "70vw", opacity: 0 }}
           animate={{
             x: handshakeStarted ? 0 : ["70vw", "20vw", "0vw"],
             opacity: 1,
-            y: handshakeStarted ? 0 : [0, -7, 0, -7, 0, -7, 0],
+            y: handshakeStarted ? 0 : [0, -8, 0, -8, 0, -8, 0],
             rotate: handshakeStarted ? 0 : [2, -2, 2, -2, 2, -2, 0],
           }}
           transition={{
@@ -134,8 +134,10 @@ const WelcomeSection = () => {
             y: { duration: 0.45, repeat: 5, ease: "easeInOut" },
             rotate: { duration: 0.45, repeat: 5, ease: "easeInOut" },
           }}
-          className="h-[380px] w-auto object-contain drop-shadow-[0_10px_30px_hsl(88_95%_55%/0.4)]"
+          style={{ transform: "scaleX(-1)" }}
+          className="h-[380px] w-auto object-contain drop-shadow-[0_10px_30px_hsl(200_100%_55%/0.5)]"
         />
+
       </div>
 
 
