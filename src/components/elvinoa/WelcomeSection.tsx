@@ -16,13 +16,13 @@ const WelcomeSection = () => {
   const { speak, cancel, speaking, supported } = useSpeech();
 
   useEffect(() => {
-    const t1 = setTimeout(() => setHandshakeStarted(true), 1400);
+    const t1 = setTimeout(() => setHandshakeStarted(true), 2600);
     const t2 = setTimeout(() => {
       if (supported) {
-        speak("Welcome to Elvinoa Technologies. It is a pleasure to meet you.", { robot: true, rate: 0.95 });
+        speak("Welcome to Elvinoa Company. It is a pleasure to meet you.", { robot: true, rate: 0.95 });
       }
       setGreeted(true);
-    }, 2400);
+    }, 3600);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
@@ -31,7 +31,7 @@ const WelcomeSection = () => {
   }, [speak, cancel, supported]);
 
   const replay = () => {
-    speak("Welcome to Elvinoa Technologies. It is a pleasure to meet you.", { robot: true, rate: 0.95 });
+    speak("Welcome to Elvinoa Company. It is a pleasure to meet you.", { robot: true, rate: 0.95 });
   };
 
   return (
@@ -85,16 +85,20 @@ const WelcomeSection = () => {
           alt="Elvinoa client"
           initial={{ x: "-70vw", opacity: 0 }}
           animate={{
-            x: handshakeStarted ? 0 : ["-70vw", "-20vw", "0vw"],
+            x: handshakeStarted ? [0, 6, 0, 6, 0] : ["-70vw", "-20vw", "0vw"],
             opacity: 1,
-            y: handshakeStarted ? 0 : [0, -7, 0, -7, 0, -7, 0],
-            rotate: handshakeStarted ? 0 : [-2, 2, -2, 2, -2, 2, 0],
+            y: handshakeStarted ? [0, -3, 0, -3, 0] : [0, -7, 0, -7, 0, -7, 0],
+            rotate: handshakeStarted ? [0, 1.5, -1.5, 1.5, 0] : [-2, 2, -2, 2, -2, 2, 0],
           }}
-          transition={{
-            x: { duration: 2.4, ease: "easeOut" },
-            y: { duration: 0.45, repeat: 5, ease: "easeInOut" },
-            rotate: { duration: 0.45, repeat: 5, ease: "easeInOut" },
-          }}
+          transition={
+            handshakeStarted
+              ? { duration: 0.35, repeat: Infinity, ease: "easeInOut" }
+              : {
+                  x: { duration: 2.4, ease: "easeOut" },
+                  y: { duration: 0.45, repeat: 5, ease: "easeInOut" },
+                  rotate: { duration: 0.45, repeat: 5, ease: "easeInOut" },
+                }
+          }
           className="h-[380px] w-auto object-contain drop-shadow-[0_10px_30px_hsl(88_95%_55%/0.4)]"
         />
 
@@ -124,16 +128,20 @@ const WelcomeSection = () => {
           alt="Elvinoa robot"
           initial={{ x: "70vw", opacity: 0 }}
           animate={{
-            x: handshakeStarted ? 0 : ["70vw", "20vw", "0vw"],
+            x: handshakeStarted ? [0, -6, 0, -6, 0] : ["70vw", "20vw", "0vw"],
             opacity: 1,
-            y: handshakeStarted ? 0 : [0, -8, 0, -8, 0, -8, 0],
-            rotate: handshakeStarted ? 0 : [2, -2, 2, -2, 2, -2, 0],
+            y: handshakeStarted ? [0, -3, 0, -3, 0] : [0, -8, 0, -8, 0, -8, 0],
+            rotate: handshakeStarted ? [0, -1.5, 1.5, -1.5, 0] : [2, -2, 2, -2, 2, -2, 0],
           }}
-          transition={{
-            x: { duration: 2.4, ease: "easeOut" },
-            y: { duration: 0.45, repeat: 5, ease: "easeInOut" },
-            rotate: { duration: 0.45, repeat: 5, ease: "easeInOut" },
-          }}
+          transition={
+            handshakeStarted
+              ? { duration: 0.35, repeat: Infinity, ease: "easeInOut" }
+              : {
+                  x: { duration: 2.4, ease: "easeOut" },
+                  y: { duration: 0.45, repeat: 5, ease: "easeInOut" },
+                  rotate: { duration: 0.45, repeat: 5, ease: "easeInOut" },
+                }
+          }
           style={{ transform: "scaleX(-1)" }}
           className="h-[380px] w-auto object-contain drop-shadow-[0_10px_30px_hsl(200_100%_55%/0.5)]"
         />
@@ -151,7 +159,7 @@ const WelcomeSection = () => {
           className="relative z-10 mt-8 max-w-lg bg-card border-2 border-neon glow-neon rounded-2xl px-6 py-4 text-center"
         >
           <p className="text-lg md:text-xl text-foreground font-medium">
-            "Welcome to <span className="text-neon font-bold">Elvinoa Technologies</span>. It is a pleasure to meet you!"
+            "Welcome to <span className="text-neon font-bold">Elvinoa Company</span>. It is a pleasure to meet you!"
           </p>
           <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-card border-t-2 border-l-2 border-neon rotate-45" />
         </motion.div>
