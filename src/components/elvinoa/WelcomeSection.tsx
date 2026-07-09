@@ -123,7 +123,6 @@ const WelcomeSection = () => {
                   rotate: { duration: 0.45, repeat: 5, ease: "easeInOut" },
                 }
           }
-          style={{ transform: "scaleX(-1)" }}
           className="absolute bottom-0 left-1/2 h-[380px] w-auto object-contain drop-shadow-[0_10px_30px_hsl(200_100%_55%/0.5)]"
         />
 
