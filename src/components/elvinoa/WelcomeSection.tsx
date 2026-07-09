@@ -3,29 +3,22 @@ import { useEffect, useState } from "react";
 import { useSpeech } from "@/hooks/useSpeech";
 import { Volume2, VolumeX } from "lucide-react";
 import welcomeScene from "@/assets/welcome-scene.png.asset.json";
-import robotImg from "@/assets/welcome-robot.png";
-import humanImg from "@/assets/welcome-human.png";
 
-// Welcome scene: real robot & human photos walk in from the sides,
-// meet in the middle, shake hands, and the robot greets the visitor.
-
+// Welcome scene: show the uploaded handshake photo and greet the visitor by voice.
 
 const WelcomeSection = () => {
-  const [handshakeStarted, setHandshakeStarted] = useState(false);
   const [greeted, setGreeted] = useState(false);
   const { speak, cancel, speaking, supported } = useSpeech();
 
   useEffect(() => {
-    const t1 = setTimeout(() => setHandshakeStarted(true), 2600);
-    const t2 = setTimeout(() => {
+    const t = setTimeout(() => {
       if (supported) {
         speak("Welcome to Elvinoa Company. It is a pleasure to meet you.", { robot: true, rate: 0.95 });
       }
       setGreeted(true);
-    }, 3600);
+    }, 1400);
     return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
+      clearTimeout(t);
       cancel();
     };
   }, [speak, cancel, supported]);
@@ -33,6 +26,7 @@ const WelcomeSection = () => {
   const replay = () => {
     speak("Welcome to Elvinoa Company. It is a pleasure to meet you.", { robot: true, rate: 0.95 });
   };
+
 
   return (
     <section id="welcome" className="relative min-h-screen flex flex-col items-center justify-center px-4 py-24 overflow-hidden">
