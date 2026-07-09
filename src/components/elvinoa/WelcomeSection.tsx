@@ -159,7 +159,7 @@ const WelcomeSection = () => {
           className="relative z-10 mt-8 max-w-lg bg-card border-2 border-neon glow-neon rounded-2xl px-6 py-4 text-center"
         >
           <p className="text-lg md:text-xl text-foreground font-medium">
-            "Welcome to <span className="text-neon font-bold">Elvinoa Technologies</span>. It is a pleasure to meet you!"
+            "Welcome to <span className="text-neon font-bold">Elvinoa Company</span>. It is a pleasure to meet you!"
           </p>
           <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-card border-t-2 border-l-2 border-neon rotate-45" />
         </motion.div>
