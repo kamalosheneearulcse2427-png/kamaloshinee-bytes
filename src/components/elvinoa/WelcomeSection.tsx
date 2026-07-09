@@ -16,13 +16,13 @@ const WelcomeSection = () => {
   const { speak, cancel, speaking, supported } = useSpeech();
 
   useEffect(() => {
-    const t1 = setTimeout(() => setHandshakeStarted(true), 1400);
+    const t1 = setTimeout(() => setHandshakeStarted(true), 2600);
     const t2 = setTimeout(() => {
       if (supported) {
-        speak("Welcome to Elvinoa Technologies. It is a pleasure to meet you.", { robot: true, rate: 0.95 });
+        speak("Welcome to Elvinoa Company. It is a pleasure to meet you.", { robot: true, rate: 0.95 });
       }
       setGreeted(true);
-    }, 2400);
+    }, 3600);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
@@ -31,7 +31,7 @@ const WelcomeSection = () => {
   }, [speak, cancel, supported]);
 
   const replay = () => {
-    speak("Welcome to Elvinoa Technologies. It is a pleasure to meet you.", { robot: true, rate: 0.95 });
+    speak("Welcome to Elvinoa Company. It is a pleasure to meet you.", { robot: true, rate: 0.95 });
   };
 
   return (
