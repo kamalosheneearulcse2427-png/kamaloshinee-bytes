@@ -128,16 +128,20 @@ const WelcomeSection = () => {
           alt="Elvinoa robot"
           initial={{ x: "70vw", opacity: 0 }}
           animate={{
-            x: handshakeStarted ? 0 : ["70vw", "20vw", "0vw"],
+            x: handshakeStarted ? [0, -6, 0, -6, 0] : ["70vw", "20vw", "0vw"],
             opacity: 1,
-            y: handshakeStarted ? 0 : [0, -8, 0, -8, 0, -8, 0],
-            rotate: handshakeStarted ? 0 : [2, -2, 2, -2, 2, -2, 0],
+            y: handshakeStarted ? [0, -3, 0, -3, 0] : [0, -8, 0, -8, 0, -8, 0],
+            rotate: handshakeStarted ? [0, -1.5, 1.5, -1.5, 0] : [2, -2, 2, -2, 2, -2, 0],
           }}
-          transition={{
-            x: { duration: 2.4, ease: "easeOut" },
-            y: { duration: 0.45, repeat: 5, ease: "easeInOut" },
-            rotate: { duration: 0.45, repeat: 5, ease: "easeInOut" },
-          }}
+          transition={
+            handshakeStarted
+              ? { duration: 0.35, repeat: Infinity, ease: "easeInOut" }
+              : {
+                  x: { duration: 2.4, ease: "easeOut" },
+                  y: { duration: 0.45, repeat: 5, ease: "easeInOut" },
+                  rotate: { duration: 0.45, repeat: 5, ease: "easeInOut" },
+                }
+          }
           style={{ transform: "scaleX(-1)" }}
           className="h-[380px] w-auto object-contain drop-shadow-[0_10px_30px_hsl(200_100%_55%/0.5)]"
         />
