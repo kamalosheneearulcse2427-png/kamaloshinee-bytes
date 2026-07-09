@@ -77,87 +77,18 @@ const WelcomeSection = () => {
         <h1 className="text-4xl md:text-6xl font-black text-gradient-neon">Welcome Aboard</h1>
       </motion.div>
 
-      {/* Stage */}
+      {/* Stage — original uploaded photo, gently animated in */}
       <div className="relative z-10 w-full max-w-5xl h-[420px] flex items-end justify-center">
-        {/* Human walks in from left, then slides right into the handshake */}
         <motion.img
-          src={humanImg}
-          alt="Elvinoa client"
-          initial={{ x: "-70vw", opacity: 0 }}
-          animate={{
-            x: handshakeStarted ? [70, 78, 70, 78, 70] : ["-70vw", "-20vw", "-40px"],
-            opacity: 1,
-            y: handshakeStarted ? [0, -4, 0, -4, 0] : [0, -7, 0, -7, 0, -7, 0],
-            rotate: handshakeStarted ? [0, 2, -1, 2, 0] : [-2, 2, -2, 2, -2, 2, 0],
-          }}
-          transition={
-            handshakeStarted
-              ? { duration: 0.4, repeat: Infinity, ease: "easeInOut" }
-              : {
-                  x: { duration: 2.4, ease: "easeOut" },
-                  y: { duration: 0.45, repeat: 5, ease: "easeInOut" },
-                  rotate: { duration: 0.45, repeat: 5, ease: "easeInOut" },
-                }
-          }
-          className="absolute bottom-0 left-1/2 -translate-x-full h-[380px] w-auto object-contain drop-shadow-[0_10px_30px_hsl(88_95%_55%/0.4)]"
+          src={welcomeScene.url}
+          alt="Robot and human handshake"
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="max-h-[420px] w-auto object-contain drop-shadow-[0_10px_40px_hsl(200_100%_55%/0.35)] rounded-2xl"
         />
-
-        {/* Robot walks in from right, mirrored so it faces the human on the left */}
-        <motion.img
-          src={robotImg}
-          alt="Elvinoa robot"
-          initial={{ x: "70vw", opacity: 0 }}
-          animate={{
-            x: handshakeStarted ? [-70, -78, -70, -78, -70] : ["70vw", "20vw", "40px"],
-            opacity: 1,
-            y: handshakeStarted ? [0, -4, 0, -4, 0] : [0, -8, 0, -8, 0, -8, 0],
-            rotate: handshakeStarted ? [0, -2, 1, -2, 0] : [2, -2, 2, -2, 2, -2, 0],
-            scaleX: -1,
-          }}
-          transition={
-            handshakeStarted
-              ? { duration: 0.4, repeat: Infinity, ease: "easeInOut" }
-              : {
-                  x: { duration: 2.4, ease: "easeOut" },
-                  y: { duration: 0.45, repeat: 5, ease: "easeInOut" },
-                  rotate: { duration: 0.45, repeat: 5, ease: "easeInOut" },
-                }
-          }
-          className="absolute bottom-0 left-1/2 h-[380px] w-auto object-contain drop-shadow-[0_10px_30px_hsl(200_100%_55%/0.5)]"
-        />
-
-        {/* Handshake glow + sparks at the point where the hands meet */}
-        {handshakeStarted && (
-          <div className="absolute left-1/2 -translate-x-1/2 bottom-[150px] pointer-events-none z-20">
-            <motion.div
-              className="w-24 h-24 rounded-full bg-neon/40 blur-2xl"
-              animate={{ scale: [1, 1.6, 1], opacity: [0.6, 1, 0.6] }}
-              transition={{ duration: 0.6, repeat: Infinity }}
-            />
-            <motion.div
-              className="absolute inset-0 flex items-center justify-center text-4xl"
-              animate={{ scale: [1, 1.25, 1], rotate: [-6, 6, -6] }}
-              transition={{ duration: 0.4, repeat: Infinity, ease: "easeInOut" }}
-            >
-              🤝
-            </motion.div>
-            {[...Array(10)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute top-1/2 left-1/2 w-2 h-2 rounded-full bg-neon"
-                initial={{ scale: 0, opacity: 1 }}
-                animate={{
-                  scale: [0, 1.8, 0],
-                  x: [0, (Math.random() - 0.5) * 100],
-                  y: [0, (Math.random() - 0.5) * 100],
-                  opacity: [1, 0.9, 0],
-                }}
-                transition={{ duration: 1.4, repeat: Infinity, delay: i * 0.12 }}
-              />
-            ))}
-          </div>
-        )}
       </div>
+
 
 
 
