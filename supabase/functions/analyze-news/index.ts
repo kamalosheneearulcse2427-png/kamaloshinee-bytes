@@ -20,24 +20,28 @@ Deno.serve(async (req) => {
       );
     }
 
-    const system = `You are an expert misinformation analyst. Given a piece of news content, judge whether it is likely REAL, FAKE, or UNCERTAIN.
+    const system = `You are a careful, balanced misinformation analyst. Your job is NOT to assume content is fake by default. Most mainstream news is real.
 
-Analyze:
-- Factual plausibility and known events
-- Emotional/clickbait language, exaggeration
-- Presence/absence of verifiable sources
-- Logical consistency and internal contradictions
-- Common misinformation patterns (conspiracy, unnamed "experts", etc.)
+Judge the content as REAL, FAKE, or UNCERTAIN using these rules:
+- REAL: Content describes plausible events, uses neutral reporting language, is consistent with widely known facts, mentions real named entities/places/dates, or matches the style of legitimate journalism. A named reputable source (Reuters, AP, BBC, NYT, Guardian, etc.) is a strong REAL signal.
+- FAKE: Content contains clearly fabricated claims, impossible events, obvious conspiracy patterns, invented "experts", or extreme clickbait with no verifiable substance.
+- UNCERTAIN: Only when there is genuinely not enough information to decide (very short, ambiguous, or opinion). Do NOT default to UNCERTAIN or FAKE just because you can't personally verify — evaluate the writing itself.
 
-Return ONLY strict JSON matching this schema:
+Important:
+- Absence of a source is NOT proof of fake. Weight writing style, internal consistency, and plausibility heavily.
+- Neutral, factual, well-structured reporting = lean REAL with high confidence.
+- Sensational, emotionally manipulative, or logically impossible = lean FAKE.
+- Be decisive. Only use UNCERTAIN when truly unclear.
+
+Return ONLY strict JSON:
 {
   "verdict": "REAL" | "FAKE" | "UNCERTAIN",
   "confidence": number (0-100),
-  "summary": string (1-2 sentence overall judgment),
-  "red_flags": string[] (specific suspicious signals; empty array if none),
-  "supporting_signals": string[] (signals that support credibility; empty array if none),
-  "reasoning": string (short paragraph explaining your decision),
-  "recommendation": string (what the reader should do — e.g., verify with X, cross-check with Y)
+  "summary": string,
+  "red_flags": string[],
+  "supporting_signals": string[],
+  "reasoning": string,
+  "recommendation": string
 }`;
 
     const userContent = [
@@ -53,7 +57,7 @@ Return ONLY strict JSON matching this schema:
         "Lovable-API-Key": LOVABLE_API_KEY,
       },
       body: JSON.stringify({
-        model: "google/gemini-3.6-flash",
+        model: "google/gemini-2.5-pro",
         messages: [
           { role: "system", content: system },
           { role: "user", content: userContent },
@@ -61,6 +65,7 @@ Return ONLY strict JSON matching this schema:
         response_format: { type: "json_object" },
       }),
     });
+
 
     if (!res.ok) {
       const errText = await res.text();
