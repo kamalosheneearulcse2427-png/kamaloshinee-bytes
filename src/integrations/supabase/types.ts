@@ -14,7 +14,93 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      chat_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          branch: string | null
+          career_goal: string | null
+          college: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          interests: string[] | null
+          skills: string[] | null
+          updated_at: string
+          year: string | null
+        }
+        Insert: {
+          branch?: string | null
+          career_goal?: string | null
+          college?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          interests?: string[] | null
+          skills?: string[] | null
+          updated_at?: string
+          year?: string | null
+        }
+        Update: {
+          branch?: string | null
+          career_goal?: string | null
+          college?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          interests?: string[] | null
+          skills?: string[] | null
+          updated_at?: string
+          year?: string | null
+        }
+        Relationships: []
+      }
+      roadmaps: {
+        Row: {
+          content: Json
+          created_at: string
+          id: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          content: Json
+          created_at?: string
+          id?: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          id?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
