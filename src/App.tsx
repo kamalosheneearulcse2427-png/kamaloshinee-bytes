@@ -7,6 +7,7 @@ import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import Chat from "./pages/Chat";
 import Roadmap from "./pages/Roadmap";
+import Interview from "./pages/Interview";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
